@@ -1,18 +1,25 @@
 <template>
   <h1>{{ title }}</h1>
-  <br>
+  <br />
   <!-- <input type="text" ref="name" />
   <button @click="handleClick">Click me</button> -->
   <div v-if="showModal">
-    <Modal
-      :header="modalHeader"
-      :text="modalText"
-      theme="sale"
-      :showModal="showModal"
-      @close="toggleModal"
-    />
+    <Modal :theme="theme" @close="toggleModal">
+      <template v-slot:links>
+        <a href="#">Sign Up</a>
+        <a href="#">More Info</a>
+      </template>
+
+      <h1>{{ modalHeader }}</h1>
+      <p>{{ modalText }}</p>
+    </Modal>
   </div>
-  <button @click="toggleModal">Switch Modal</button>
+  <button @click="toggleModal('Bruh title', 'text', 'sale')">
+    Switch Modal
+  </button>
+  <button @click="toggleModal('Bruh-less title', 'stonxt')">
+    Switch Second Modal
+  </button>
 </template>
 
 <script>
@@ -26,8 +33,9 @@ export default {
   data() {
     return {
       title: "My First Vue App",
-      modalHeader: "Bruh",
-      modalText: "jejox",
+      modalHeader: "",
+      modalText: "",
+      theme: "",
       showModal: false,
     };
   },
@@ -37,7 +45,10 @@ export default {
     //   this.$refs.name.classList.add("active");
     //   this.$refs.name.focus();
     // },
-    toggleModal() {
+    toggleModal(header, text, theme) {
+      this.modalHeader = header;
+      this.modalText = text;
+      this.theme = theme;
       this.showModal = !this.showModal;
     },
   },
@@ -57,5 +68,9 @@ h1 {
   border-bottom: 1px solid #ddd;
   display: inline-block;
   padding-bottom: 10px;
+}
+button {
+  display: inline-flex;
+  margin: 0 10px;
 }
 </style>
